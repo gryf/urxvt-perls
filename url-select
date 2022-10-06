@@ -39,6 +39,11 @@ sub on_start {
 		@{$self->{browser}} = split /\s+/, $self->x_resource('url-select.launcher');
 	} else {
 		@{$self->{browser}} = ('x-www-browser');
+    }
+    if ($self->x_resource('url-select.launcher2')) {
+		@{$self->{launcher2}} = split /\s+/, $self->x_resource('url-select.video-player');
+	} else {
+		@{$self->{launcher2}} = ('xdg-open');
 	}
 	if ($self->x_resource('url-select.underline') eq 'true') {
 		$self->enable(line_update => \&line_update);
@@ -77,7 +82,7 @@ sub on_start {
 		}
 	} else {
 		@{$self->{pattern}} = qr{
-			(?:https?://|ftp://|news://|mailto:|file://|\bwww\.)
+			(?:https?://|ftp://|news://|git://|mailto:|file://|www\.)
 			[\w\-\@;\/?:&=%\$.+!*\x27,~#]*
 			(
 				\([\w\-\@;\/?:&=%\$.+!*\x27,~#]*\)   # Allow a pair of matched parentheses
@@ -156,6 +161,11 @@ sub key_press {
 	} elsif ($keysym == 0xff0d || $char eq 'o' ||
 			(lc($char) eq 'm' && $event->{state} & urxvt::ControlMask)) {
 		$self->exec_async(@{$self->{browser}}, ${$self->{found}[$self->{n}]}[4]);
+		deactivate($self) unless $char eq 'o';
+    } elsif ($char eq 'p') {
+        # play the link with youtube-dl
+		# $self->exec_async("mpv", "--ytdl-format=bestvideo+bestaudio", ${$self->{found}[$self->{n}]}[4]);
+		$self->exec_async(@{$self->{launcher2}}, ${$self->{found}[$self->{n}]}[4]);
 		deactivate($self) unless $char eq 'o';
 	} elsif ($char eq 'y') {
 		my $found = $self->{found}[$self->{n}];

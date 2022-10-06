@@ -66,6 +66,7 @@ Use Meta-u to activate URL selection mode, then use the following keys:
     j/k:      Select next downward/upward URL (also with arrow keys)
     g/G:      Select first/last URL (also with home/end key)
     o/Return: Open selected URL in browser, Return: deactivate afterwards
+    p:        Open selected URL with another program, like video-player
     y:        Copy (yank) selected URL and deactivate selection mode
     q/Escape: Deactivate URL selection mode
 
@@ -76,6 +77,9 @@ Options:
     URxvt.url-select.button:     mouse button to click-open URLs (default: 2)
     URxvt.url-select.launcher:   browser/command to open selected URL with
     URxvt.url-select.underline:  if set to true, all URLs get underlined
+    URxvt.url-select.launcher2:  like a launcher, command, which will be run
+                                 with "p" shortcut, as an alternative to browser
+                                 or xdg-open
 
 For compatibility reasons, url-select will also use any patterns defined for
 the matcher extension by reading all `URxvt.matcher.pattern.[0-9]` resources.

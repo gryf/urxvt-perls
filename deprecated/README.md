@@ -4,45 +4,6 @@ See the file README.md in the parent directory for installation instructions,
 in case you still want to use them.
 
 
-url-select
-----------
-Use keyboard shortcuts to select URLs.
-
-**DEPRECATED**
-
-Since version 9.21 the *matcher* extension shipped with rxvt-unicode fully
-replaces this extension. The `url-select:select_next` action is provided by the
-`matcher:select` action. However, the *matcher* extension does not provide
-vi-like key bindings; it only uses the arrow and home/end keys.
-
-This should be used as a replacement for the default matcher extension, it also
-makes URLs clickable with the middle mouse button.
-
-After installing, put the following lines in your .Xdefaults/.Xresources:
-
-    URxvt.perl-ext-common: ...,url-select
-    URxvt.keysym.M-u: perl:url-select:select_next
-
-Use Meta-u to activate URL selection mode, then use the following keys:
-
-    j/k:      Select next downward/upward URL (also with arrow keys)
-    g/G:      Select first/last URL (also with home/end key)
-    o/Return: Open selected URL in browser, Return: deactivate afterwards
-    y:        Copy (yank) selected URL and deactivate selection mode
-    q/Escape: Deactivate URL selection mode
-
-Options:
-
-    URxvt.url-select.autocopy:  if set to true, selected URLs are automatically
-                                copied to the PRIMARY buffer
-    URxvt.url-select.button:    mouse button to click-open URLs (default: 2)
-    URxvt.url-select.launcher:  browser/command to open selected URL with
-    URxvt.url-select.underline: if set to true, all URLs get underlined
-
-For compatibility reasons, url-select will also use any patterns defined for
-the matcher extension by reading all `URxvt.matcher.pattern.[0-9]` resources.
-
-
 clipboard
 ---------
 

@@ -1,5 +1,6 @@
 A small collection of perl extensions for the rxvt-unicode terminal emulator.
 
+
 Installation
 ------------
 Simply place the scripts you want to install in /usr/lib/urxvt/perl/ for
@@ -43,3 +44,38 @@ Use Meta-Escape to activate selection mode, then use the following keys:
 Options:
 
     URxvt.keyboard-select.clipboard: If true, copy to clipboard too
+
+
+url-select
+----------
+Use keyboard shortcuts to select URLs.
+
+Even though *matcher* extension shipped with rxvt-unicode since version 9.21 can
+be used for selecting urls, it lacks of powerful vi-like key bindings.
+
+This should be used as a replacement for the default matcher extension, it also
+makes URLs clickable with the middle mouse button.
+
+After installing, put the following lines in your .Xdefaults/.Xresources:
+
+    URxvt.perl-ext-common: ...,url-select
+    URxvt.keysym.M-u: perl:url-select:select_next
+
+Use Meta-u to activate URL selection mode, then use the following keys:
+
+    j/k:      Select next downward/upward URL (also with arrow keys)
+    g/G:      Select first/last URL (also with home/end key)
+    o/Return: Open selected URL in browser, Return: deactivate afterwards
+    y:        Copy (yank) selected URL and deactivate selection mode
+    q/Escape: Deactivate URL selection mode
+
+Options:
+
+    URxvt.url-select.autocopy:   if set to true, selected URLs are automatically
+                                 copied to the PRIMARY buffer
+    URxvt.url-select.button:     mouse button to click-open URLs (default: 2)
+    URxvt.url-select.launcher:   browser/command to open selected URL with
+    URxvt.url-select.underline:  if set to true, all URLs get underlined
+
+For compatibility reasons, url-select will also use any patterns defined for
+the matcher extension by reading all `URxvt.matcher.pattern.[0-9]` resources.

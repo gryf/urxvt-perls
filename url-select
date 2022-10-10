@@ -39,9 +39,9 @@ sub on_start {
 		@{$self->{browser}} = split /\s+/, $self->x_resource('url-select.launcher');
 	} else {
 		@{$self->{browser}} = ('x-www-browser');
-    }
-    if ($self->x_resource('url-select.launcher2')) {
-		@{$self->{launcher2}} = split /\s+/, $self->x_resource('url-select.video-player');
+	}
+	if ($self->x_resource('url-select.launcher2')) {
+		@{$self->{launcher2}} = split /\s+/, $self->x_resource('url-select.launcher2');
 	} else {
 		@{$self->{launcher2}} = ('xdg-open');
 	}
@@ -55,7 +55,7 @@ sub on_start {
 	$self->{state} = 0;
 
 	for my $mod (split '', $self->x_resource("url-select.button") ||
-	                       $self->x_resource("matcher.button") || 2) {
+						   $self->x_resource("matcher.button") || 2) {
 		if ($mod =~ /^\d+$/) {
 			$self->{button} = $mod;
 		} elsif ($mod eq "C") {
@@ -107,7 +107,7 @@ sub line_update {
 	for (@$rend) {
 		if (urxvt::GET_CUSTOM($_) & UNDERLINED) {
 			$_ = urxvt::SET_CUSTOM($_, urxvt::GET_CUSTOM($_) & ~UNDERLINED) &
-			     ~urxvt::RS_Uline;
+				 ~urxvt::RS_Uline;
 		}
 	}
 
@@ -156,15 +156,13 @@ sub key_press {
 	my $char = chr($keysym);
 
 	if ($keysym == 0xff1b || lc($char) eq 'q' ||
-	    (lc($char) eq 'c' && $event->{state} & urxvt::ControlMask)) {
+		(lc($char) eq 'c' && $event->{state} & urxvt::ControlMask)) {
 		deactivate($self);
 	} elsif ($keysym == 0xff0d || $char eq 'o' ||
 			(lc($char) eq 'm' && $event->{state} & urxvt::ControlMask)) {
 		$self->exec_async(@{$self->{browser}}, ${$self->{found}[$self->{n}]}[4]);
 		deactivate($self) unless $char eq 'o';
-    } elsif ($char eq 'p') {
-        # play the link with youtube-dl
-		# $self->exec_async("mpv", "--ytdl-format=bestvideo+bestaudio", ${$self->{found}[$self->{n}]}[4]);
+	} elsif ($char eq 'p') {
 		$self->exec_async(@{$self->{launcher2}}, ${$self->{found}[$self->{n}]}[4]);
 		deactivate($self) unless $char eq 'o';
 	} elsif ($char eq 'y') {
@@ -197,7 +195,7 @@ sub on_button_press {
 	my ($self, $event) = @_;
 
 	my $mask = $self->ModLevel3Mask | $self->ModMetaMask |
-	           urxvt::ShiftMask | urxvt::ControlMask;
+			   urxvt::ShiftMask | urxvt::ControlMask;
 
 	if ($event->{button} == $self->{button} && ($event->{state} & $mask) == $self->{state}) {
 		my $col = $event->{col};
@@ -265,7 +263,7 @@ sub select_next {
 	}
 
 	while (($dir < 0 && $row > $self->top_row) ||
-	       ($dir > 0 && $row < $self->nrow - 1)) {
+		   ($dir > 0 && $row < $self->nrow - 1)) {
 		my $line = $self->line($row);
 		$row = ($dir < 0 ? $line->beg : $line->end) + $dir;
 		$line = $self->line($row);
